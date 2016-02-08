@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Google Play game services IDs.
+Save this file as res/values/games-ids.xml in your project.
+-->
+<resources>
+    <string name="app_id">988659327049</string>
+    <string name="package_name">com.archer.circle_run</string>
+    <string name="achievement_pfftt_noob">CgkIycDAheMcEAIQAQ</string>
+    <string name="achievement_at_least_you_are_trying">CgkIycDAheMcEAIQAg</string>
+    <string name="achievement_you_can_do_better">CgkIycDAheMcEAIQAw</string>
+    <string name="achievement_the_fun_has_just_started">CgkIycDAheMcEAIQBA</string>
+    <string name="achievement_somebody_is_getting_addicted">CgkIycDAheMcEAIQBQ</string>
+    <string name="achievement_getting_used_to_things">CgkIycDAheMcEAIQBg</string>
+    <string name="achievement_you_are_becoming_a_pro">CgkIycDAheMcEAIQBw</string>
+    <string name="achievement_nailed_it">CgkIycDAheMcEAIQCA</string>
+    <string name="leaderboard_top_score">CgkIycDAheMcEAIQCQ</string>
+    <string name="leaderboard_astroid">CgkIycDAheMcEAIQCg</string>
+    <string name="leaderboard_deltoid">CgkIycDAheMcEAIQCw</string>
+    <string name="leaderboard_cornoid">CgkIycDAheMcEAIQDA</string>
+    <string name="leaderboard_ellipse">CgkIycDAheMcEAIQDQ</string>
+    <string name="leaderboard_ellipse_evolute">CgkIycDAheMcEAIQDg</string>
+    <string name="leaderboard_eight_curve">CgkIycDAheMcEAIQDw</string>
+    <string name="leaderboard_lemniscate">CgkIycDAheMcEAIQEA</string>
+    <string name="leaderboard_bicorn">CgkIycDAheMcEAIQEQ</string>
+</resources>
