@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -13,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.archer.circle_run.game_logic.MultiPlayerGame;
 import com.archer.circle_run.game_logic.SinglePlayerGame;
 
 import java.lang.ref.WeakReference;
@@ -26,6 +26,9 @@ public class MainViewManager {
     int CurrentScreen;
     View.OnClickListener clickListener;
     SinglePlayerGame objSinglePlayerGame;
+    MultiPlayerGame objMultiPlayerGame;
+    static long multiPlayerScoreLimit;
+    static boolean multiPlayerGame;
 
 
     //region BackGround Colors
@@ -90,12 +93,11 @@ public class MainViewManager {
 
     }
 
-
+    GestureDetector gdt = new GestureDetector(mContext,new GestureListener());
     private void addGestureListenerToView(View v) {
-        final GestureDetector gdt = new GestureDetector(mContext,new GestureListener());
         v.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(final View view, final MotionEvent event) {
+            public boolean onTouch(View view, MotionEvent event) {
                 gdt.onTouchEvent(event);
                 return true;
             }
@@ -196,11 +198,12 @@ public class MainViewManager {
                         break;
                     case R.id.btn_play:
                         ScaleUP_ThenRevert(mContext.findViewById(R.id.img_play));
-                        load_selection_screen();
+                        multiPlayerGame = false;
+                        load_selection_screen(false);
                         mContext.objSoundManager.Play(mContext.objSoundManager.CLICK);
                         break;
                     case R.id.btn_multi_play:
-                        reloadBackground();
+                        load_multi_player_score_screen();
                         ScaleUP_ThenRevert(mContext.findViewById(R.id.img_multi_play));
                         mContext.objSoundManager.Play(mContext.objSoundManager.CLICK);
                         break;
@@ -232,54 +235,77 @@ public class MainViewManager {
                     }
                     //endregion
 
-
                     //region select game
                     case R.id.btn_ellipse_evolute:
                     case R.id.ellipse_evolute:
                         ScaleUP_ThenRevert(mContext.findViewById(R.id.ellipse_evolute));
-                        load_single_player_game(Helper.ELLIPSE_EVOLUTE);
+                        if(!multiPlayerGame)
+                            load_single_player_game(Helper.ELLIPSE_EVOLUTE);
+                        else
+                            load_multi_player_game(Helper.ELLIPSE_EVOLUTE);
                         mContext.objSoundManager.Play(mContext.objSoundManager.CLICK);
                         break;
                     case R.id.btn_ellipse:
                     case R.id.ellipse:
                         ScaleUP_ThenRevert(mContext.findViewById(R.id.ellipse));
-                        load_single_player_game(Helper.ELLIPSE);
+                        if(!multiPlayerGame)
+                            load_single_player_game(Helper.ELLIPSE);
+                        else
+                            load_multi_player_game(Helper.ELLIPSE);
                         mContext.objSoundManager.Play(mContext.objSoundManager.CLICK);
                         break;
                     case R.id.btn_astroid:
                     case R.id.astroid:
                         ScaleUP_ThenRevert(mContext.findViewById(R.id.astroid));
-                        load_single_player_game(Helper.ASTROID);
+                        if(!multiPlayerGame)
+                            load_single_player_game(Helper.ASTROID);
+                        else
+                            load_multi_player_game(Helper.ASTROID);
                         mContext.objSoundManager.Play(mContext.objSoundManager.CLICK);
                         break;
                     case R.id.btn_deltoid:
                     case R.id.deltoid:
                         ScaleUP_ThenRevert(mContext.findViewById(R.id.deltoid));
-                        load_single_player_game(Helper.DELTOID);
+                        if(!multiPlayerGame)
+                            load_single_player_game(Helper.DELTOID);
+                        else
+                            load_multi_player_game(Helper.DELTOID);
                         mContext.objSoundManager.Play(mContext.objSoundManager.CLICK);
                         break;
                     case R.id.btn_cornoid:
                     case R.id.cornoid:
                         ScaleUP_ThenRevert(mContext.findViewById(R.id.cornoid));
-                        load_single_player_game(Helper.CORNOID);
+                        if(!multiPlayerGame)
+                            load_single_player_game(Helper.CORNOID);
+                        else
+                            load_multi_player_game(Helper.CORNOID);
                         mContext.objSoundManager.Play(mContext.objSoundManager.CLICK);
                         break;
                     case R.id.btn_bicorn:
                     case R.id.bicorn:
                         ScaleUP_ThenRevert(mContext.findViewById(R.id.bicorn));
-                        load_single_player_game(Helper.BICORN);
+                        if(!multiPlayerGame)
+                            load_single_player_game(Helper.BICORN);
+                        else
+                            load_multi_player_game(Helper.BICORN);
                         mContext.objSoundManager.Play(mContext.objSoundManager.CLICK);
                         break;
                     case R.id.btn_lemniscate:
                     case R.id.lemniscate:
                         ScaleUP_ThenRevert(mContext.findViewById(R.id.lemniscate));
-                        load_single_player_game(Helper.LEMNISCATE);
+                        if(!multiPlayerGame)
+                            load_single_player_game(Helper.LEMNISCATE);
+                        else
+                            load_multi_player_game(Helper.LEMNISCATE);
                         mContext.objSoundManager.Play(mContext.objSoundManager.CLICK);
                         break;
                     case R.id.btn_eight_curve:
                     case R.id.eight_curve:
                         ScaleUP_ThenRevert(mContext.findViewById(R.id.eight_curve));
-                        load_single_player_game(Helper.EIGHT_CURVE);
+                        if(!multiPlayerGame)
+                            load_single_player_game(Helper.EIGHT_CURVE);
+                        else
+                            load_multi_player_game(Helper.EIGHT_CURVE);
                         mContext.objSoundManager.Play(mContext.objSoundManager.CLICK);
                         break;
                     case R.id.btn_back_select_game:
@@ -309,7 +335,10 @@ public class MainViewManager {
                         mContext.objSoundManager.Play(mContext.objSoundManager.CLICK);
                         break;
                     case R.id.btn_back_settings:
-                        gotoHome_SlideRight();
+                        if(multiPlayerGame)
+                            gotoHome_SlideLeft();
+                        else
+                            gotoHome_SlideRight();
                         mContext.objSoundManager.Play(mContext.objSoundManager.CLICK);
                         break;
                     //endregion
@@ -344,6 +373,37 @@ public class MainViewManager {
                         Helper.takeScreenShotAndShare(m_context, msg);
                         break;
                     }
+                    //endregion
+
+                    //region MultiPlay Score Set
+                    case R.id.btn_score_down:
+                    {
+                        mContext.objSoundManager.Play(mContext.objSoundManager.CLICK);
+                        TextView tvScoreLimit = (TextView)mContext.findViewById(R.id.tvScoreLimit);
+                        int limit = Integer.valueOf(String.valueOf(tvScoreLimit.getText()));
+                        if(limit>1)
+                            tvScoreLimit.setText(String.valueOf(limit-1));
+                        mContext.objSoundManager.Play(mContext.objSoundManager.CLICK);
+                    }
+                    break;
+                    case R.id.btn_score_up:
+                    {
+                        TextView tvScoreLimit = (TextView)mContext.findViewById(R.id.tvScoreLimit);
+                        int limit = Integer.valueOf(String.valueOf(tvScoreLimit.getText()));
+                        if(limit<1000000)
+                            tvScoreLimit.setText(String.valueOf(limit+1));
+                        mContext.objSoundManager.Play(mContext.objSoundManager.CLICK);
+                    }
+                    break;
+                    case R.id.btn_start:
+                    {
+                        ScaleUP_ThenRevert(v);
+                        TextView tvScoreLimit = (TextView)mContext.findViewById(R.id.tvScoreLimit);
+                        multiPlayerScoreLimit = Integer.valueOf(String.valueOf(tvScoreLimit.getText()));
+                        multiPlayerGame = true;
+                        load_selection_screen(true);
+                    }
+                    break;
                     //endregion
                 }
             }
@@ -438,10 +498,81 @@ public class MainViewManager {
 
 
 
-    private void load_selection_screen() {
+    private void load_selection_screen(final boolean slideRight) {
+        if(isLoadingView)
+            return;
+        isLoadingView=true;
+
         new CountDownTimer(420,420)
         {
 
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                View view_to_load;
+                LayoutInflater inflater = mContext.getLayoutInflater();
+
+                view_to_load = inflater.inflate(R.layout.view_select_game, Root, false);
+                Root.addView(view_to_load.findViewById(R.id.select_game));
+                if(slideRight)
+                {
+                    slide_right(view_to_load, Root.getChildAt(0));
+                    view_to_load.findViewById(R.id.btn_back_select_game).setVisibility(View.INVISIBLE);
+                }
+                else
+                    slide_left(view_to_load, Root.getChildAt(0));
+
+                initialize_selection_screen();
+            }
+        }.start();
+    }
+
+
+    private void load_multi_player_game(final int path_index)
+    {
+        if(isLoadingView)
+            return;
+        isLoadingView = true;
+        new CountDownTimer(420,420) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+                reloadBackground();
+                View view_to_load,view_to_remove;
+                LayoutInflater inflater = mContext.getLayoutInflater();
+
+                view_to_load = inflater.inflate(R.layout.view_multiplayer_game, Root, false);
+                Root.addView(view_to_load.findViewById(R.id.multiplayer_game));
+                view_to_remove = Root.getChildAt(0);
+                remove_view(view_to_remove);
+                view_to_load.setAlpha(0);
+                view_to_load.animate().alpha(1);
+
+
+                CurrentScreen = R.id.multiplayer_game;
+
+                if(path_index>=0)
+                    objMultiPlayerGame = new MultiPlayerGame(new WeakReference<>(mContext),path_index,multiPlayerScoreLimit);
+                else
+                    objMultiPlayerGame = new MultiPlayerGame(new WeakReference<>(mContext),0,multiPlayerScoreLimit);
+
+                isLoadingView=false;
+            }
+        }.start();
+    }
+
+    private void load_multi_player_score_screen() {
+
+        new CountDownTimer(420, 420) {
             @Override
             public void onTick(long millisUntilFinished) {
 
@@ -455,13 +586,21 @@ public class MainViewManager {
                 View view_to_load;
                 LayoutInflater inflater = mContext.getLayoutInflater();
 
-                view_to_load = inflater.inflate(R.layout.view_select_game, Root, false);
-                Root.addView(view_to_load.findViewById(R.id.select_game));
-                slide_left(view_to_load, Root.getChildAt(0));
+                view_to_load = inflater.inflate(R.layout.view_multiplayer_score_limit, Root, false);
+                Root.addView(view_to_load.findViewById(R.id.multi_player_score_limit));
+                slide_right(view_to_load, Root.getChildAt(0));
 
-                initialize_selection_screen();
+
+                initialize_multiplayer_score_screen();
             }
         }.start();
+    }
+
+    private void initialize_multiplayer_score_screen() {
+        CurrentScreen = R.id.multi_player_score_limit;
+        int ids[] = {R.id.btn_score_down,R.id.btn_score_up,R.id.btn_start};
+        for (int id: ids)
+            mContext.findViewById(id).setOnClickListener(clickListener);
     }
 
     private void initialize_selection_screen() {
@@ -523,7 +662,7 @@ public class MainViewManager {
 
     public void load_settings_screen()
     {
-        new CountDownTimer(42, 420) {
+        new CountDownTimer(420, 420) {
             @Override
             public void onTick(long millisUntilFinished) {
 
@@ -748,11 +887,17 @@ public class MainViewManager {
                 if(!backPressFlag)
                     setBackPressFlag();
                 else
+                {
                     mContext.finish();
+                }
                 break;
             case R.id.settings_screen:
+                break;
             case R.id.select_game:
-                gotoHome_SlideRight();
+                if(multiPlayerGame)
+                    gotoHome_SlideLeft();
+                else
+                    gotoHome_SlideRight();
                 break;
             case R.id.single_player_game:
             {
@@ -760,11 +905,17 @@ public class MainViewManager {
                 gotoHome_SlideRight();
                 break;
             }
-//            case R.id.multi_player_game:
-//            {
-//            gotoHome_SlideLeft();
-//                break;
-//            }
+            case R.id.multiplayer_game:
+            {
+                objMultiPlayerGame.stopGame();
+                gotoHome_SlideLeft();
+                break;
+            }
+            case R.id.multi_player_score_limit:
+            {
+                gotoHome_SlideLeft();
+                break;
+            }
 
 
         }
@@ -782,18 +933,17 @@ public class MainViewManager {
         slide_right(view_to_load, view_to_remove);
         initialize_home_view_controls();
     }
-
-//    private void gotoHome_SlideLeft()
-//    {
-//        if(isLoadingView)
-//            return;
-//        LayoutInflater inflater = mContext.getLayoutInflater();
-//        View view_to_load = inflater.inflate(R.layout.view_home, Root, false);
-//        Root.addView(view_to_load.findViewById(R.id.home_screen));
-//        View view_to_remove = Root.getChildAt(0);
-//        slide_left(view_to_load, view_to_remove);
-//        initialize_home_view_controls();
-//    }
+    public void gotoHome_SlideLeft()
+    {
+        if(isLoadingView)
+            return;
+        LayoutInflater inflater = mContext.getLayoutInflater();
+        View view_to_load = inflater.inflate(R.layout.view_home, Root, false);
+        Root.addView(view_to_load.findViewById(R.id.home_screen));
+        View view_to_remove = Root.getChildAt(0);
+        slide_left(view_to_load, view_to_remove);
+        initialize_home_view_controls();
+    }
 
     public void remove_view(View v)
     {
@@ -825,7 +975,12 @@ public class MainViewManager {
                     }
 
                     if(CurrentScreen == R.id.settings_screen || CurrentScreen == R.id.single_player_game || CurrentScreen == R.id.btn_back_select_game)
-                        gotoHome_SlideRight();
+                    {
+                        if(multiPlayerGame)
+                            gotoHome_SlideLeft();
+                        else
+                            gotoHome_SlideRight();
+                    }
                     return false; // Left to right
                 }
 

@@ -1,26 +1,19 @@
 package com.archer.circle_run;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.view.KeyEvent;
-import android.view.View;
 
 import com.archer.circle_run.GameServices.BaseGameUtils;
 import com.archer.circle_run.game_logic.path_logic.MathHelper;
 import com.archer.circle_run.util.InAppBilling;
 
 import java.lang.ref.WeakReference;
-import java.util.concurrent.CountDownLatch;
 
 public class MainActivity extends Activity {
     public ManageAds objManageAds;

@@ -4,12 +4,12 @@ import android.content.Context;
 import android.graphics.PointF;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.archer.circle_run.Helper;
 import com.archer.circle_run.R;
 import com.archer.circle_run.game_logic.path_logic.AllPaths;
-import com.archer.circle_run.game_logic.path_logic.MathHelper;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -97,6 +97,8 @@ public class DeathCircle extends View {
         PointF nextPoint = objPath.calcNextPoint(theta_position);
         setX(nextPoint.x - radius);
         setY(nextPoint.y - radius);
+
+        Log.w("--->>","X : " + String.valueOf(getX()) + ", Y : " + String.valueOf(getY()));
 
         theta_position+= (direction *theta_velocity);
         if(theta_position>2*Math.PI)

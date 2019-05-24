@@ -53,19 +53,18 @@ public class CirclePath extends View
             path.lineTo(nextCirclePoint.x, nextCirclePoint.y);
         }
         path.close();
-    }
-
-
-    public void onDraw(Canvas c){
-        c.drawARGB(0,0,0,0);
 
         paint.setStrokeWidth(Helper.ConvertToPx(ct, 5));
         paint.setPathEffect(null);
         paint.setColor(Color.argb(0xEA, 0xFF, 0xFF, 0xFF));
         paint.setStyle(Paint.Style.STROKE);
         paint.setAntiAlias(true);
-        c.drawPath(path, paint);
+    }
 
+
+    public void onDraw(Canvas c){
+        c.drawARGB(0, 0, 0, 0);
+        c.drawPath(path, paint);
     }
 
 

@@ -2,7 +2,6 @@ package com.archer.circle_run.game_logic;
 
 import android.content.Context;
 import android.graphics.PointF;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
@@ -10,14 +9,16 @@ import android.view.View;
 import com.archer.circle_run.Helper;
 
 import java.lang.ref.WeakReference;
-import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by Swastik on 27-01-2016.
  */
 public class MyCircle extends View {
     Context ct;
+    boolean multiPlayerGame;
     SinglePlayerGame objSinglePlayerGame;
+    MultiPlayerGame objMultiPlayerGame;
+    public boolean player_2;
 
     public MyCircle(Context context) {
         super(context);
@@ -52,7 +53,23 @@ public class MyCircle extends View {
         min_radius = def_radius/10;
         objCircle = new Circle();
         objSinglePlayerGame = _single_player_game.get();
+        reset();
 
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                move();
+            }
+        },100);
+    }
+
+    public void init(WeakReference<MultiPlayerGame> _multi_player_game,int dummy_text)
+    {
+        def_radius = Helper.ConvertToPx(ct, 22);
+        min_radius = def_radius/10;
+        objCircle = new Circle();
+        objMultiPlayerGame = _multi_player_game.get();
+        multiPlayerGame = true;
         reset();
 
         new Handler().postDelayed(new Runnable() {
@@ -76,9 +93,23 @@ public class MyCircle extends View {
         if(theta_position>2*Math.PI)
         {
             theta_position=0;
-            objSinglePlayerGame.increment_score();
-            objSinglePlayerGame.mContext.objSoundManager
-                    .Play(objSinglePlayerGame.mContext.objSoundManager.PLING);
+
+            if(multiPlayerGame)
+            {
+                if(player_2)
+                    objMultiPlayerGame.increment_score(0,1);
+                else
+                    objMultiPlayerGame.increment_score(1,0);
+
+                objMultiPlayerGame.mContext.objSoundManager
+                        .Play(objMultiPlayerGame.mContext.objSoundManager.PLING);
+            }
+            else
+            {
+                objSinglePlayerGame.increment_score();
+                objSinglePlayerGame.mContext.objSoundManager
+                        .Play(objSinglePlayerGame.mContext.objSoundManager.PLING);
+            }
         }
     }
 

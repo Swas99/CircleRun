@@ -187,7 +187,7 @@ public class SinglePlayerGame
         };
     }
     private void init_game() {
-        FRAME_INTERVAL = 36;
+        FRAME_INTERVAL = 33;
         objMyCircle = (MyCircle)mContext.findViewById(R.id.white_circle);
         objMyCircle.init(new WeakReference<>(this));
 

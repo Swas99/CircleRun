@@ -158,15 +158,16 @@
             android:orientation="horizontal"
             >
             <RelativeLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_margin="9dp">
                 <View
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:clickable="true"
                     android:id="@+id/btn_multi_play"
+                    android:layout_centerInParent="true"
                     android:background="@drawable/btn_white_circle"
                     />
                 <View
@@ -180,14 +181,16 @@
 
 
             <RelativeLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:layout_margin="13dp">
+                android:layout_margin="9dp">
                 <View
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:clickable="true"
                     android:id="@+id/btn_leader_board"
+                    android:layout_centerInParent="true"
                     android:background="@drawable/btn_white_circle"
                     />
                 <View
@@ -200,14 +203,16 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:layout_margin="13dp">
+                android:layout_margin="9dp">
                 <View
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:clickable="true"
                     android:id="@+id/btn_settings"
+                    android:layout_centerInParent="true"
                     android:background="@drawable/btn_white_circle"
                     />
                 <View
@@ -220,14 +225,16 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:layout_margin="13dp">
+                android:layout_margin="9dp">
                 <View
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:clickable="true"
                     android:id="@+id/btn_rate"
+                    android:layout_centerInParent="true"
                     android:background="@drawable/btn_white_circle"
                     />
                 <View
@@ -240,14 +247,16 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:layout_margin="13dp">
+                android:layout_margin="9dp">
                 <View
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:clickable="true"
                     android:id="@+id/btn_share"
+                    android:layout_centerInParent="true"
                     android:background="@drawable/btn_white_circle"
                     />
                 <View

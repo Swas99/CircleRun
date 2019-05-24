@@ -1,3 +1,16 @@
+# Circle Run
+
+
+#Screenshots:
+![](screenshots/1.png)
+![](screenshots/2.png)
+![](screenshots/3.png)
+![](screenshots/4.png)
+![](screenshots/5.png)
+![](screenshots/6.png)
+![](screenshots/7.png)
+![](screenshots/8.png)
+
 This Repository Conntains the Solution to 'Circle Run' game developed by swastik &
 published under publisher id-'Archer' on play store.
 
@@ -11,13 +24,3 @@ You can control the speed of the white ball by touching/releasing the screen.
 You die if you collide with the colored ball.
 The number of colored balls increases with every lap the white ball completes.
 Your aim is to make as many circles as possible.
-
-
-Clone repo and open using Android studio.
-This solution may be used for reference purpose.
-
-
-Developer Details :
-Swastik
-+353 894250099
-swsahu9@gmail.com
