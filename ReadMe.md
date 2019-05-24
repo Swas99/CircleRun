@@ -11,8 +11,7 @@
 ![](screenshots/7.png)
 ![](screenshots/8.png)
 
-This Repository Conntains the Solution to 'Circle Run' game developed by swastik &
-published under publisher id-'Archer' on play store.
+This Repository Conntains the Solution to 'Circle Run', published under publisher id-'Archer' on play store.
 
 Link to the game on play store : 
 https://play.google.com/store/apps/details?id=com.archer.circle_run
